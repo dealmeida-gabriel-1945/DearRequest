@@ -54,16 +54,16 @@ export class DrawerContentComponent extends React.Component {
                 <DrawerItem label={'Home'} onPress={() => this.redirectTo('HOME')}
                             icon={(color, size) => (<Icon name={'home-outline'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição GET'} onPress={() => this.redirectTo('HOME')}
+                <DrawerItem label={'Requisição GET'} onPress={() => this.redirectTo('REQUEST_GET', 'GET')}
                             icon={(color, size) => (<Icon name={'plus'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição POST'} onPress={() => this.redirectTo('HOME')}
+                <DrawerItem label={'Requisição POST'} onPress={() => this.redirectTo('REQUEST_POST', 'POST')}
                             icon={(color, size) => (<Icon name={'rocket-launch-outline'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição UPDATE'} onPress={() => this.redirectTo('HOME')}
+                <DrawerItem label={'Requisição UPDATE'} onPress={() => this.redirectTo('REQUEST_UPDATE', 'UPDATE')}
                             icon={(color, size) => (<Icon name={'pencil'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição DELETE'} onPress={() => this.redirectTo('HOME')}
+                <DrawerItem label={'Requisição DELETE'} onPress={() => this.redirectTo('REQUEST_DELETE', 'DELETE')}
                             icon={(color, size) => (<Icon name={'bullseye'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
             </>

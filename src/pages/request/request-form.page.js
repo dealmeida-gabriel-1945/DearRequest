@@ -5,19 +5,21 @@ import {
 } from "react-native";
 import {CustomHeaderComponent} from "../../components/custom-header/custom-header.component";
 
-export class HomePage extends React.Component {
+export class RequestFormPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            verbo: props.route.params.verbo
         };
     }
 
     render() {
+        var {verbo} = this.state;
         return(
             <>
                 <CustomHeaderComponent drawerNavigation={this.props.navigation}/>
                 <View>
-                    <Text>Home</Text>
+                    <Text>{verbo}</Text>
                 </View>
             </>
         );
