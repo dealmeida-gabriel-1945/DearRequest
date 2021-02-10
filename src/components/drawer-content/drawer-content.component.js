@@ -2,6 +2,7 @@ import React from "react";
 import {
     View,
     Text,
+    Image,
 } from "react-native";
 import {
     Avatar,
@@ -35,8 +36,8 @@ export class DrawerContentComponent extends React.Component {
         return(
             <View style={FlexStyle.makeFlex(1)}>
                 <DrawerContentScrollView {...props}>
-                    <View style={[FlexStyle.makeFlex(1), AlignStyle.centerXY, PaddingStyle.makePadding(0,15)]}>
-                        <Text style={[TextStyle.makeFontSize(30), TextStyle.textDecoration.negrito]}>DearHttp</Text>
+                    <View style={[FlexStyle.makeFlex(1), AlignStyle.centerXY, PaddingStyle.makePadding(0,5)]}>
+                        <Image source={require('../../../assets/custom-splash.png')} style={{borderRadius: 10}}/>
                     </View>
                     {this.renderDrawerItens()}
                 </DrawerContentScrollView>
