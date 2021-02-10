@@ -1,49 +1,37 @@
 import React from "react";
 import {
-    Text,
     View,
-    ScrollView,
-    SafeAreaView
+    Text, SafeAreaView, ScrollView,
 } from "react-native";
 import {CustomHeaderComponent} from "../../components/custom-header/custom-header.component";
-import {PaddingStyle} from "../../style/padding.style";
 import {FlexStyle} from "../../style/flex.style";
-import {EndFormComponent} from "../../components/end-form/end-form.component";
-import {RequestModel} from "../../model/request.model";
-import {Button, Paragraph, Snackbar, TextInput} from "react-native-paper";
+import {AlignStyle} from "../../style/align.style";
+import {TextStyle} from "../../style/text.style";
+import {PaddingStyle} from "../../style/padding.style";
 import {MarginStyle} from "../../style/margin.style";
+import {Button, Paragraph, TextInput} from "react-native-paper";
+import {RequestModel} from "../../model/request.model";
 import {ColorConstants} from "../../util/constants/color.constants";
 import {HeaderModel} from "../../model/header.model";
-import {AlignStyle} from "../../style/align.style";
-import {RequestService} from "../../service/request.service";
-import {TextStyle} from "../../style/text.style";
-import {ShowResponse} from "../../components/show-response/show-response.component";
 
-export class RequestFormPage extends React.Component {
+export class SettingsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            verbo: props.route.params.verbo,
             requisicao: new RequestModel(),
             headerToAdd: new HeaderModel(),
             headers: [],
-            haveError: false,
-            response: null,
-            error: null,
         };
     }
-
     render() {
-        var {verbo, requisicao, response, error} = this.state;
-        if(response) return <ShowResponse error={false} response={response} voltar={() => this.setState({response: null, error: null})}/>
-        if(error) return <ShowResponse error={true} response={error} voltar={() => this.setState({response: null, error: null})}/>
+        let {requisicao} = this.state;
         return(
             <>
                 <CustomHeaderComponent drawerNavigation={this.props.navigation}/>
                 <View style={[FlexStyle.makeFlex(1), AlignStyle.centerXY]}>
-                    <Text style={[TextStyle.makeFontSize(30), TextStyle.textDecoration.negrito]}>{verbo}</Text>
+                    <Text style={[TextStyle.makeFontSize(25), TextStyle.textDecoration.negrito]}>Settings</Text>
                 </View>
-                <SafeAreaView style={[FlexStyle.makeFlex(9), FlexStyle.flexOrientation.flexColumn, PaddingStyle.makePadding(5,0,5,0)]}>
+                <SafeAreaView style={[FlexStyle.makeFlex(12), FlexStyle.flexOrientation.flexColumn, PaddingStyle.makePadding(5,0,5,0)]}>
                     <ScrollView>
                         <View style={MarginStyle.makeMargin(0,10)}>
                             <TextInput
@@ -53,7 +41,7 @@ export class RequestFormPage extends React.Component {
                                 onChangeText={text => this.setState({requisicao: requisicao.setField('url', text)})}
                             />
                         </View>
-                        <View style={[FlexStyle.makeFlex(1), MarginStyle.makeMargin(0,10)]}>
+                        <View style={MarginStyle.makeMargin(0,10)}>
                             <TextInput
                                 label="Request Body"
                                 type={'flat'}
@@ -71,17 +59,9 @@ export class RequestFormPage extends React.Component {
                         </View>
                     </ScrollView>
                 </SafeAreaView>
-                <View style={[FlexStyle.makeFlex(1)]}>
-                    <EndFormComponent
-                        isCancel={false}
-                        onWipeOut={() => requisicao.emptyMe()}
-                        onSubmit={() => this.submete()}
-                    />
-                </View>
             </>
         );
     }
-
 
     renderInputHeaders() {
         var {headerToAdd} = this.state;
@@ -165,17 +145,5 @@ export class RequestFormPage extends React.Component {
     removeItemHeader(header) {
         let aux = this.state.headers.filter(item => (item.key !== header.key) && (item.value !== header.value));
         this.setState({headers: aux})
-    }
-
-    submete() {
-        this.state.headers.map(
-            item => this.setState({requisicao: this.state.requisicao.addHeader(item)})
-        );
-        RequestService.DISPATCH_REQUEST(this.state.requisicao, this.state.verbo)
-            .then(response => {
-                this.setState({response})
-            }).catch(error =>{
-            this.setState({error})
-            })
     }
 }

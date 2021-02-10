@@ -1,16 +1,23 @@
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 
-import { StatusBar } from 'expo-status-bar';
+import {Provider} from "react-redux";
 import { StyleSheet, Text, View } from 'react-native';
 import {MainRoutes} from "./src/main.routes";
 import {ColorConstants} from "./src/util/constants/color.constants";
+import {createStore} from "redux";
+import {indexReducer} from "./src/util/redux/reducers/index.reducer";
+
+//criacao da store
+const store = createStore(indexReducer);
 
 export default function App() {
     return (
-        <PaperProvider theme={theme}>
-            <MainRoutes />
-        </PaperProvider>
+        <Provider store={store}>
+            <PaperProvider theme={theme}>
+                <MainRoutes />
+            </PaperProvider>
+        </Provider>
     );
 }
 const theme = {

@@ -4,11 +4,11 @@
     "slug": "DearRequest",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/custom-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/custom-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#e20b0b"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,9 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dealmeidagabriel.dearrequest"
     },
     "android": {
+      "package": "com.dealmeidagabriel.dearrequest",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
