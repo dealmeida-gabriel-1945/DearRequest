@@ -13,7 +13,7 @@ export const MainRoutes = () => (
             <Drawer.Screen name="HOME" component={HomePage} />
             <Drawer.Screen name="REQUEST_GET" component={RequestFormPage} />
             <Drawer.Screen name="REQUEST_POST" component={RequestFormPage} />
-            <Drawer.Screen name="REQUEST_UPDATE" component={RequestFormPage} />
+            <Drawer.Screen name="REQUEST_PUT" component={RequestFormPage} />
             <Drawer.Screen name="REQUEST_DELETE" component={RequestFormPage} />
         </Drawer.Navigator>
     </NavigationContainer>
