@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/custom-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "red"
+      "backgroundColor": "#e20b0b"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,9 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dealmeidagabriel.dearrequest"
     },
     "android": {
+      "package": "com.dealmeidagabriel.dearrequest",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

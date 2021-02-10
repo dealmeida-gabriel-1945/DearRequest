@@ -41,6 +41,12 @@ export class DrawerContentComponent extends React.Component {
                     </View>
                     {this.renderDrawerItens()}
                 </DrawerContentScrollView>
+                <Drawer.Section>
+                    <DrawerItem label={'Settings'} style={[TextStyle.textColor.verdePadrao]}
+                                icon={(color, size) => (<Icon name={'cog'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
+                                onPress={() => this.redirectTo('SETTINGS')}
+                    />
+                </Drawer.Section>
             </View>
         );
     }
