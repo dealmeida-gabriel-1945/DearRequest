@@ -60,7 +60,7 @@ export class DrawerContentComponent extends React.Component {
                 <DrawerItem label={'Requisição POST'} onPress={() => this.redirectTo('REQUEST_POST', 'POST')}
                             icon={(color, size) => (<Icon name={'rocket-launch-outline'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição UPDATE'} onPress={() => this.redirectTo('REQUEST_UPDATE', 'UPDATE')}
+                <DrawerItem label={'Requisição PUT'} onPress={() => this.redirectTo('REQUEST_PUT', 'PUT')}
                             icon={(color, size) => (<Icon name={'pencil'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
                 <DrawerItem label={'Requisição DELETE'} onPress={() => this.redirectTo('REQUEST_DELETE', 'DELETE')}
