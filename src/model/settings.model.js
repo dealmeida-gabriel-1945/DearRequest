@@ -4,8 +4,8 @@ import {RequestModel} from "./request.model";
 export class SettingsModel extends ModelDefault{
     request;
 
-    constructor() {
+    constructor(request = new RequestModel()) {
         super();
-        this.request = new RequestModel();
+        this.request = request;
     }
 }

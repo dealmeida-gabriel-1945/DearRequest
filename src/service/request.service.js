@@ -20,7 +20,6 @@ export const RequestService = {
 };
 
 const dispatch_get = (request) => {
-    console.log(request)
     return axios.get(request.url, request.headers);
 };
 const dispatch_post = (request) => {

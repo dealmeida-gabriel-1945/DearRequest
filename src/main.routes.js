@@ -4,7 +4,7 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import {HomePage} from "./pages/home/home.page";
 import {DrawerContentComponent} from "./components/drawer-content/drawer-content.component";
 import {NavigationContainer} from "@react-navigation/native";
-import {RequestFormPage} from "./pages/request/request-form.page";
+import RequestFormPage from "./pages/request/request-form.page";
 
 const Drawer = createDrawerNavigator();
 export const MainRoutes = () => (

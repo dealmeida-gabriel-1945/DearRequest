@@ -8,10 +8,12 @@ import {ColorConstants} from "../../util/constants/color.constants";
 
 export const EndFormComponent = ({
      isCancel = true, onCancel = () => null,
-     isWipeOut = true, onWipeOut = () => null,
+     isWipeOut= true, onWipeOut = () => null,
      isSubmit = true, onSubmit = () => null,
+     isRefresh= false, onRefresh = () => null,
 }) => (
     <View style={[FlexStyle.makeFlex(1), FlexStyle.flexOrientation.flexRow]}>
+        {(isRefresh) ? renderRefresh(onRefresh) : null}
         {(isCancel) ? renderCancel(onCancel) : null}
         {(isWipeOut) ? renderWipeOut(onWipeOut) : null}
         {(isSubmit) ? renderSubmit(onSubmit) : null}
@@ -35,6 +37,13 @@ const renderSubmit = (onClick) => (
     <View style={[FlexStyle.makeFlex(1), MarginStyle.makeMargin(5,5,5,5)]}>
         <Button icon="login" mode="contained" onPress={() => onClick()} color={ColorConstants.VERDE}>
             Submit
+        </Button>
+    </View>
+);
+const renderRefresh = (onClick) => (
+    <View style={[FlexStyle.makeFlex(1), MarginStyle.makeMargin(5,5,5,5)]}>
+        <Button icon="refresh" mode="contained" onPress={() => onClick()} color={ColorConstants.AZUL}>
+            Refresh
         </Button>
     </View>
 );

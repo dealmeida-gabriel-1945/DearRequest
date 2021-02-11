@@ -18,11 +18,16 @@ import {AlignStyle} from "../../style/align.style";
 import {RequestService} from "../../service/request.service";
 import {TextStyle} from "../../style/text.style";
 import {ShowResponse} from "../../components/show-response/show-response.component";
+import {updateSettings} from "../../service/redux/action/setting.action";
+import {connect} from "react-redux";
+import {SettingsModel} from "../../model/settings.model";
+import {MessageConstans} from "../../util/constants/message.constants";
 
-export class RequestFormPage extends React.Component {
+class RequestFormPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            settings: props.settings,
             verbo: props.route.params.verbo,
             requisicao: new RequestModel(),
             headerToAdd: new HeaderModel(),
@@ -32,6 +37,13 @@ export class RequestFormPage extends React.Component {
 
             isSettings : (props.route.params.verbo === 'SETTINGS'),
         };
+
+        if(props.settings.settings){
+            let {request} = this.state.settings.settings;
+            this.state.requisicao.url = request.url;
+            this.state.requisicao.body = request.body;
+            this.state.requisicao.headers = request.headers;
+        }
     }
 
     render() {
@@ -75,8 +87,10 @@ export class RequestFormPage extends React.Component {
                 <View style={[FlexStyle.makeFlex(1)]}>
                     <EndFormComponent
                         isCancel={false}
-                        onWipeOut={() => requisicao.emptyMe()}
+                        isRefresh={true}
+                        onWipeOut={() => this.setState({requisicao: new RequestModel()})}
                         onSubmit={() => this.submete()}
+                        onRefresh={() => this.refresh()}
                     />
                 </View>
             </>
@@ -163,19 +177,44 @@ export class RequestFormPage extends React.Component {
     }
 
     removeItemHeader(header) {
-        let aux = this.state.headers.filter(item => (item.key !== header.key) && (item.value !== header.value));
-        this.setState({headers: aux})
+        let aux = this.state.requisicao.headers.filter(item => (item.key !== header.key) && (item.value !== header.value));
+        this.setState({requisicao: this.state.requisicao.setField('headers', aux)})
     }
 
     submete() {
-        if(!this.state.isSettings){
+        if(this.state.isSettings){
+            console.log('changed')
+            this.props.dipatchUpdateSettings(new SettingsModel(this.state.requisicao));
+            alert(MessageConstans.ACTION_SUCCESS);
+        }else{
             RequestService.DISPATCH_REQUEST(this.state.requisicao, this.state.verbo)
                 .then(response => {
                     this.setState({response})
                 }).catch(error =>{
                 this.setState({error})
             });
-            return;
         }
+
+    }
+
+    refresh(){
+        let {request} = this.state.settings.settings;
+        let requisicao = this.state.requisicao;
+        requisicao.url = request.url;
+        requisicao.body = request.body;
+        requisicao.headers = request.headers;
+        this.setState({requisicao})
     }
 }
+
+const myMapDispatchToProps ={
+    dipatchUpdateSettings: updateSettings,
+};
+
+const mapStateToProps = state => {
+    const {settings} = state;
+    return {settings};
+}
+
+//currying
+export default connect(mapStateToProps, myMapDispatchToProps)(RequestFormPage);
