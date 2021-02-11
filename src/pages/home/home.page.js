@@ -10,12 +10,18 @@ import {FlexStyle} from "../../style/flex.style";
 import {PaddingStyle} from "../../style/padding.style";
 import {TextStyle} from "../../style/text.style";
 import {MarginStyle} from "../../style/margin.style";
+import {updateSettings} from "../../service/redux/action/setting.action";
+import {connect} from "react-redux";
+import {SettingsService} from "../../service/settings.service";
 
-export class HomePage extends React.Component {
+class HomePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
+        SettingsService.getSettings()
+            .then(res => {
+                this.props.dipatchUpdateSettings(JSON.parse(res));
+            }).catch(err => {})
     }
 
     render() {
@@ -34,3 +40,10 @@ export class HomePage extends React.Component {
         );
     }
 }
+
+const myMapDispatchToProps ={
+    dipatchUpdateSettings: updateSettings,
+};
+
+//currying
+export default connect(null, myMapDispatchToProps)(HomePage);

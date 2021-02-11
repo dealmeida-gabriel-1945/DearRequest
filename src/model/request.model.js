@@ -1,9 +1,18 @@
 import {ModelDefault} from "./model.default";
 
 export class RequestModel extends ModelDefault{
-    url = 'https://randomuser.me/api/';
+    url;
     body;
-    headers = [];
+    headers;
+    toPersist;
+
+    constructor() {
+        super();
+        this.url = '';
+        this.body = '';
+        this.headers = [];
+        this.toPersist = false;
+    }
 
     addHeader(header){
         this.headers[header.key] = header.value;
