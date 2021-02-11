@@ -37,12 +37,11 @@ class RequestFormPage extends React.Component {
 
             isSettings : (props.route.params.verbo === 'SETTINGS'),
         };
-
         if(props.settings.settings){
-            let {request} = this.state.settings.settings;
-            this.state.requisicao.url = request.url;
-            this.state.requisicao.body = request.body;
-            this.state.requisicao.headers = request.headers;
+            let settings = this.state.settings.settings;
+            this.state.requisicao.url = settings.url;
+            this.state.requisicao.body = settings.body;
+            this.state.requisicao.headers = settings.headers;
         }
     }
 
@@ -55,6 +54,7 @@ class RequestFormPage extends React.Component {
                 <CustomHeaderComponent drawerNavigation={this.props.navigation}/>
                 <View style={[FlexStyle.makeFlex(1), AlignStyle.centerXY]}>
                     <Text style={[TextStyle.makeFontSize(30), TextStyle.textDecoration.negrito]}>{verbo}</Text>
+                    {this.renderSettingsDesxcription()}
                 </View>
                 <SafeAreaView style={[FlexStyle.makeFlex(9), FlexStyle.flexOrientation.flexColumn, PaddingStyle.makePadding(5,0,5,0)]}>
                     <ScrollView>
@@ -183,9 +183,7 @@ class RequestFormPage extends React.Component {
 
     submete() {
         if(this.state.isSettings){
-            console.log('changed')
             this.props.dipatchUpdateSettings(new SettingsModel(this.state.requisicao));
-            alert(MessageConstans.ACTION_SUCCESS);
         }else{
             RequestService.DISPATCH_REQUEST(this.state.requisicao, this.state.verbo)
                 .then(response => {
@@ -198,12 +196,21 @@ class RequestFormPage extends React.Component {
     }
 
     refresh(){
-        let {request} = this.state.settings.settings;
+        if(!this.props.settings.settings) return
+        let settings = this.props.settings.settings;
         let requisicao = this.state.requisicao;
-        requisicao.url = request.url;
-        requisicao.body = request.body;
-        requisicao.headers = request.headers;
-        this.setState({requisicao})
+        requisicao.url = settings.url;
+        requisicao.body = settings.body;
+        requisicao.headers = settings.headers;
+
+        let aux = this.props.settings.settings;
+        aux.request = requisicao;
+        this.setState({requisicao, updateSettings: {settings:aux}})
+    }
+
+    renderSettingsDesxcription() {
+        if(!this.state.isSettings) return;
+        return(<Paragraph>Put the default request in this page.</Paragraph>);
     }
 }
 

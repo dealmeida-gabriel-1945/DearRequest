@@ -2,10 +2,14 @@ import {ModelDefault} from "./model.default";
 import {RequestModel} from "./request.model";
 
 export class SettingsModel extends ModelDefault{
-    request;
+    url;
+    body;
+    headers;
 
     constructor(request = new RequestModel()) {
         super();
-        this.request = request;
+        this.url = request.url;
+        this.body = request.body;
+        this.headers = request.headers;
     }
 }
