@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    View, Text, SafeAreaView, ScrollView
+    View, Text, SafeAreaView, ScrollView, Clipboard
 } from "react-native";
 import {FlexStyle} from "../../style/flex.style";
 import {PaddingStyle} from "../../style/padding.style";
