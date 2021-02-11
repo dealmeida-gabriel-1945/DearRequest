@@ -1,14 +1,9 @@
 import React from "react";
 import {
     View,
-    Text,
     Image,
 } from "react-native";
 import {
-    Avatar,
-    Title,
-    Caption,
-    Paragraph,
     Drawer,
 } from "react-native-paper";
 import {DrawerContentScrollView, DrawerItem} from "@react-navigation/drawer";
@@ -32,7 +27,7 @@ export class DrawerContentComponent extends React.Component {
     }
 
     render() {
-        var {navigation, props} = this.state;
+        var {props} = this.state;
         return(
             <View style={FlexStyle.makeFlex(1)}>
                 <DrawerContentScrollView {...props}>
@@ -61,16 +56,16 @@ export class DrawerContentComponent extends React.Component {
                 <DrawerItem label={'Home'} onPress={() => this.redirectTo('HOME')}
                             icon={(color, size) => (<Icon name={'home-outline'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição GET'} onPress={() => this.redirectTo('REQUEST_GET', 'GET')}
+                <DrawerItem label={'GET Request'} onPress={() => this.redirectTo('REQUEST_GET', 'GET')}
                             icon={(color, size) => (<Icon name={'plus'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição POST'} onPress={() => this.redirectTo('REQUEST_POST', 'POST')}
+                <DrawerItem label={'POST Request'} onPress={() => this.redirectTo('REQUEST_POST', 'POST')}
                             icon={(color, size) => (<Icon name={'rocket-launch-outline'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição PUT'} onPress={() => this.redirectTo('REQUEST_PUT', 'PUT')}
+                <DrawerItem label={'PUT Request'} onPress={() => this.redirectTo('REQUEST_PUT', 'PUT')}
                             icon={(color, size) => (<Icon name={'pencil'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
-                <DrawerItem label={'Requisição DELETE'} onPress={() => this.redirectTo('REQUEST_DELETE', 'DELETE')}
+                <DrawerItem label={'DELETE Request'} onPress={() => this.redirectTo('REQUEST_DELETE', 'DELETE')}
                             icon={(color, size) => (<Icon name={'bullseye'} color={ColorConstants.VERMELHO_PADRAO} size={25}/>)}
                 />
             </>

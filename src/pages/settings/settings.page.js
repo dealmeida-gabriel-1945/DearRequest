@@ -13,18 +13,24 @@ import {Button, Paragraph, TextInput} from "react-native-paper";
 import {RequestModel} from "../../model/request.model";
 import {ColorConstants} from "../../util/constants/color.constants";
 import {HeaderModel} from "../../model/header.model";
+import {connect} from "react-redux";
+import {updateSettings} from "../../service/redux/actions/config.actions";
+import {SettingsModel} from "../../model/settings.model";
+import {EndFormComponent} from "../../components/end-form/end-form.component";
+import {MessagesConstants} from "../../util/constants/message.constants";
 
-export class SettingsPage extends React.Component {
+class SettingsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            requisicao: new RequestModel(),
+            request: ((Object.keys(props.settings).length > 0) ? props.settings.settings : new SettingsModel()).request,
+            dispatchUpdateSettings: props.dispatchUpdateSettings,
             headerToAdd: new HeaderModel(),
             headers: [],
         };
     }
     render() {
-        let {requisicao} = this.state;
+        let {request} = this.state;
         return(
             <>
                 <CustomHeaderComponent drawerNavigation={this.props.navigation}/>
@@ -37,18 +43,18 @@ export class SettingsPage extends React.Component {
                             <TextInput
                                 label="URL"
                                 type={'flat'}
-                                value={requisicao.url}
-                                onChangeText={text => this.setState({requisicao: requisicao.setField('url', text)})}
+                                value={request.url}
+                                onChangeText={text => this.setState({request: request.setField('url', text)})}
                             />
                         </View>
                         <View style={MarginStyle.makeMargin(0,10)}>
                             <TextInput
                                 label="Request Body"
                                 type={'flat'}
-                                value={requisicao.body}
+                                value={request.body}
                                 multiline={true}
                                 numberOfLines={10}
-                                onChangeText={text => this.setState({requisicao: requisicao.setField('body', text)})}
+                                onChangeText={text => this.setState({request: request.setField('body', text)})}
                             />
                         </View>
                         <View style={MarginStyle.makeMargin(0,10)}>
@@ -59,6 +65,13 @@ export class SettingsPage extends React.Component {
                         </View>
                     </ScrollView>
                 </SafeAreaView>
+                <View style={[FlexStyle.makeFlex(1)]}>
+                    <EndFormComponent
+                        isCancel={false}
+                        onWipeOut={() => this.setState({request: request.emptyMe()})}
+                        onSubmit={() => this.submitForm()}
+                    />
+                </View>
             </>
         );
     }
@@ -88,7 +101,7 @@ export class SettingsPage extends React.Component {
                 </View>
                 <View>
                     <Button icon="plus" mode="contained" onPress={() => this.adicionaHeader()} color={ColorConstants.VERDE}>
-                        Adicionar
+                        Add
                     </Button>
                 </View>
             </>
@@ -146,4 +159,24 @@ export class SettingsPage extends React.Component {
         let aux = this.state.headers.filter(item => (item.key !== header.key) && (item.value !== header.value));
         this.setState({headers: aux})
     }
+
+    submitForm() {
+        let {request, headerToAdd, dispatchUpdateSettings} = this.state;
+        let settings = new SettingsModel();
+        settings.request = request;
+        settings.request.headers = headerToAdd;
+        dispatchUpdateSettings(settings);
+        alert(MessagesConstants.ACTION_SUCCESS)
+    }
 }
+
+const myMapDispatchToProps ={
+    dispatchUpdateSettings: updateSettings,
+};
+const mapStateToProps = state => {
+    const {settings} = state;
+    return {settings};
+}
+
+//currying
+export default connect(mapStateToProps, myMapDispatchToProps)(SettingsPage);

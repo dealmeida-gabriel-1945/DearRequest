@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import {MainRoutes} from "./src/main.routes";
 import {ColorConstants} from "./src/util/constants/color.constants";
 import {createStore} from "redux";
-import {indexReducer} from "./src/util/redux/reducers/index.reducer";
+import {indexReducer} from "./src/service/redux/reducers/index.reducer";
 
 //criacao da store
 const store = createStore(indexReducer);

@@ -1,4 +1,4 @@
-import {ActionConstants} from "../../constants/action.constants";
+import {ActionConstants} from "../../../util/constants/action.constants";
 
 const ACTIONS = ActionConstants.SETTINGS;
 
