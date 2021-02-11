@@ -26,10 +26,11 @@ export class RequestFormPage extends React.Component {
             verbo: props.route.params.verbo,
             requisicao: new RequestModel(),
             headerToAdd: new HeaderModel(),
-            headers: [],
             haveError: false,
             response: null,
             error: null,
+
+            isSettings : (props.route.params.verbo === 'SETTINGS'),
         };
     }
 
@@ -82,7 +83,6 @@ export class RequestFormPage extends React.Component {
         );
     }
 
-
     renderInputHeaders() {
         var {headerToAdd} = this.state;
         return(
@@ -108,21 +108,11 @@ export class RequestFormPage extends React.Component {
                 </View>
                 <View>
                     <Button icon="plus" mode="contained" onPress={() => this.adicionaHeader()} color={ColorConstants.VERDE}>
-                        Adicionar
+                        Add Header
                     </Button>
                 </View>
             </>
         );
-    }
-
-    adicionaHeader() {
-        if(!this.state.headerToAdd.key){
-            alert('Fill the key input!')
-            return
-        }
-        let aux = this.state.headers;
-        aux.push(this.state.headerToAdd);
-        this.setState({headers: aux, headerToAdd: new HeaderModel('', '')})
     }
 
     renderHeadersPt1() {
@@ -134,7 +124,7 @@ export class RequestFormPage extends React.Component {
     }
 
     renderHeadersPt2() {
-        return this.state.headers.map(
+        return this.state.requisicao.headers.map(
             (item, i) => (
                 <View style={FlexStyle.flexOrientation.flexRow} key={i}>
                     <View style={[FlexStyle.makeFlex(2),  MarginStyle.makeMargin(1,1,1,1)]}>
@@ -162,20 +152,30 @@ export class RequestFormPage extends React.Component {
         );
     }
 
+    adicionaHeader() {
+        if(!this.state.headerToAdd.key){
+            alert('Fill the key input!')
+            return
+        }
+        let aux = this.state.requisicao.headers;
+        aux.push(this.state.headerToAdd);
+        this.setState({requisicao: this.state.requisicao.setField('headers', aux), headerToAdd: new HeaderModel('', '')})
+    }
+
     removeItemHeader(header) {
         let aux = this.state.headers.filter(item => (item.key !== header.key) && (item.value !== header.value));
         this.setState({headers: aux})
     }
 
     submete() {
-        this.state.headers.map(
-            item => this.setState({requisicao: this.state.requisicao.addHeader(item)})
-        );
-        RequestService.DISPATCH_REQUEST(this.state.requisicao, this.state.verbo)
-            .then(response => {
-                this.setState({response})
-            }).catch(error =>{
-            this.setState({error})
-            })
+        if(!this.state.isSettings){
+            RequestService.DISPATCH_REQUEST(this.state.requisicao, this.state.verbo)
+                .then(response => {
+                    this.setState({response})
+                }).catch(error =>{
+                this.setState({error})
+            });
+            return;
+        }
     }
 }

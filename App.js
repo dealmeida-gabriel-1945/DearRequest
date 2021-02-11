@@ -2,7 +2,7 @@ import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 
 import {Provider} from "react-redux";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {MainRoutes} from "./src/main.routes";
 import {ColorConstants} from "./src/util/constants/color.constants";
 import {createStore} from "redux";

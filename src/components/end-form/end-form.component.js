@@ -20,21 +20,21 @@ export const EndFormComponent = ({
 const renderCancel = (onClick) => (
     <View style={[FlexStyle.makeFlex(1), MarginStyle.makeMargin(5,5,5,5)]}>
         <Button icon="cancel" mode="contained" onPress={() => onClick()} color={ColorConstants.VERMELHO}>
-            Voltar
+            Back
         </Button>
     </View>
 );
 const renderWipeOut = (onClick) => (
     <View style={[FlexStyle.makeFlex(1), MarginStyle.makeMargin(5,5,5,5)]}>
         <Button icon="alert" mode="contained" onPress={() => onClick()} color={ColorConstants.AMARELO}>
-            Limpar
+            Clear
         </Button>
     </View>
 );
 const renderSubmit = (onClick) => (
     <View style={[FlexStyle.makeFlex(1), MarginStyle.makeMargin(5,5,5,5)]}>
         <Button icon="login" mode="contained" onPress={() => onClick()} color={ColorConstants.VERDE}>
-            Próximo
+            Submit
         </Button>
     </View>
 );
