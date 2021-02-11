@@ -10,7 +10,7 @@ import {PaddingStyle} from "../../style/padding.style";
 import {FlexStyle} from "../../style/flex.style";
 import {EndFormComponent} from "../../components/end-form/end-form.component";
 import {RequestModel} from "../../model/request.model";
-import {Button, Paragraph, Snackbar, TextInput} from "react-native-paper";
+import {Button, Checkbox, Paragraph, Snackbar, TextInput} from "react-native-paper";
 import {MarginStyle} from "../../style/margin.style";
 import {ColorConstants} from "../../util/constants/color.constants";
 import {HeaderModel} from "../../model/header.model";
@@ -21,17 +21,17 @@ import {ShowResponse} from "../../components/show-response/show-response.compone
 import {updateSettings} from "../../service/redux/action/setting.action";
 import {connect} from "react-redux";
 import {SettingsModel} from "../../model/settings.model";
-import {MessageConstans} from "../../util/constants/message.constants";
+import {SettingsService} from "../../service/settings.service";
 
 class RequestFormPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             settings: props.settings,
+            toPersist: false,
             verbo: props.route.params.verbo,
             requisicao: new RequestModel(),
             headerToAdd: new HeaderModel(),
-            haveError: false,
             response: null,
             error: null,
 
@@ -42,6 +42,7 @@ class RequestFormPage extends React.Component {
             this.state.requisicao.url = settings.url;
             this.state.requisicao.body = settings.body;
             this.state.requisicao.headers = settings.headers;
+            this.state.toPersist = settings.toPersist;
         }
     }
 
@@ -81,6 +82,9 @@ class RequestFormPage extends React.Component {
                         </View>
                         <View style={MarginStyle.makeMargin(0,10)}>
                             {this.renderHeadersPt1()}
+                        </View>
+                        <View style={MarginStyle.makeMargin(0,10)}>
+                            {this.renderCheckToPersist()}
                         </View>
                     </ScrollView>
                 </SafeAreaView>
@@ -166,6 +170,22 @@ class RequestFormPage extends React.Component {
         );
     }
 
+    renderCheckToPersist(){
+        if(!this.state.isSettings) return;
+        return(
+            <View style={[FlexStyle.flexOrientation.flexRow]}>
+                <View style={[FlexStyle.makeFlex(1)]}>
+                    <Checkbox.Item label="Persist"
+                        status={this.state.toPersist ? 'checked' : 'unchecked'}
+                        onPress={() => this.setState({toPersist: !this.state.toPersist})}
+                        color={ColorConstants.VERMELHO_PADRAO}
+                    />
+                </View>
+                <View style={FlexStyle.makeFlex(2)}></View>
+            </View>
+        );
+    }
+
     adicionaHeader() {
         if(!this.state.headerToAdd.key){
             alert('Fill the key input!')
@@ -183,7 +203,11 @@ class RequestFormPage extends React.Component {
 
     submete() {
         if(this.state.isSettings){
-            this.props.dipatchUpdateSettings(new SettingsModel(this.state.requisicao));
+            let toSave = new SettingsModel(this.state.requisicao, this.state.toPersist);
+            this.props.dipatchUpdateSettings(toSave);
+            if(!this.state.toPersist) return;
+            SettingsService.storeSettings(toSave)
+                .then(res => {}).catch(err => {});
         }else{
             RequestService.DISPATCH_REQUEST(this.state.requisicao, this.state.verbo)
                 .then(response => {
@@ -194,6 +218,8 @@ class RequestFormPage extends React.Component {
         }
 
     }
+
+
 
     refresh(){
         if(!this.props.settings.settings) return

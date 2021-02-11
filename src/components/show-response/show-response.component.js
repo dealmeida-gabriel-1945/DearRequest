@@ -28,6 +28,7 @@ export const ShowResponse = ({
                 <ScrollView>
                     <View style={FlexStyle.makeFlex(1)}>
                         <TextInput
+                            label="Results"
                             type={'flat'}
                             value={text}
                             multiline={true}
