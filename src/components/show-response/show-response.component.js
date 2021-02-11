@@ -17,7 +17,6 @@ export const ShowResponse = ({
     let text = JSON.stringify(response, null, "\t");
     return (
         <>
-
             <View style={[FlexStyle.makeFlex(1), AlignStyle.centerXY, {backgroundColor: (error) ? ColorConstants.VERMELHO : ColorConstants.VERDE}]}>
                 <Text style={(error) ? TextStyle.textColor.branco : TextStyle.textColor.preto}>
                     {!error ? `Response: ${response.status}:`  : response.message}
@@ -30,6 +29,7 @@ export const ShowResponse = ({
                         <TextInput
                             label="Results"
                             type={'flat'}
+                            disabled={true}
                             value={text}
                             multiline={true}
                             numberOfLines={10}
